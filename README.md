@@ -1,13 +1,5 @@
 # Welcome to M<sup>2</sup>-CL
 
-### Repository for Computer Vision course from Hanoi University of Science and Technology (HUST), Ha Noi, Viet Nam, presented by group 17.
-
-This is the official code for the "Multi-Scale and Multi-Layer 
-Contrastive Learning for Domain Generalization" [paper](https://ieeexplore.ieee.org/document/10472869), 
-which has been published in the [IEEE Transactions on 
-Artificial Intelligence](https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=9078688) journal.
-The preprint is also available [here](https://arxiv.org/abs/2308.14418).
-
 ## Method
  In this work, we argue that the problems caused by
 domain shift between data drawn from unknown domains can be mitigated
