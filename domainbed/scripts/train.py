@@ -15,7 +15,7 @@ import torch
 import torchvision
 import torch.utils.data
 import sys
-sys.path.append('./M2CL/domainbed')
+sys.path.append('kaggle/working/M2CL/domainbed')
 from domainbed import datasets
 from domainbed import hparams_registry
 from domainbed import algorithms
