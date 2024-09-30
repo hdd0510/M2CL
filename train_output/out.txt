@@ -1,0 +1,51 @@
+Environment:
+	Python: 3.12.2
+	PyTorch: 2.2.2
+	Torchvision: 0.17.2
+	CUDA: None
+	CUDNN: None
+	NumPy: 2.1.1
+	PIL: 10.4.0
+Args:
+	algorithm: ERM
+	alpha: None
+	batch_size: None
+	beta: None
+	checkpoint_freq: None
+	data_dir: None
+	dataset: RotatedMNIST
+	holdout_fraction: 0.2
+	hparams: None
+	hparams_seed: 0
+	lparam: None
+	lr: None
+	output_dir: train_output
+	save_model_every_checkpoint: False
+	seed: 0
+	skip_model_save: False
+	steps: None
+	task: domain_generalization
+	temp: None
+	test_envs: [0]
+	trial_seed: 0
+	uda_holdout_fraction: 0
+HParams:
+	batch_size: 64
+	class_balanced: False
+	data_augmentation: True
+	lparam: None
+	lr: 0.001
+	nonlinear_classifier: False
+	resnet18: True
+	resnet_dropout: 0.0
+	temp: None
+	weight_decay: 0.0
+Traceback (most recent call last):
+  File "/Users/dinzdzun/Downloads/m2cl/domainbed/scripts/train.py", line 116, in <module>
+    dataset = vars(datasets)[args.dataset](args.data_dir,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/dinzdzun/Downloads/m2cl/domainbed/datasets.py", line 160, in __init__
+    super(RotatedMNIST, self).__init__(root, [0, 15, 30, 45, 60, 75],
+  File "/Users/dinzdzun/Downloads/m2cl/domainbed/datasets.py", line 89, in __init__
+    raise ValueError('Data directory not specified!')
+ValueError: Data directory not specified!

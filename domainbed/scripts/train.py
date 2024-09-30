@@ -15,13 +15,13 @@ import torch
 import torchvision
 import torch.utils.data
 import sys
-sys.path.append('kaggle/working/M2CL/domainbed')
+project_root = os.path.abspath('/Users/dinzdzun/Downloads/m2cl/domainbed')
+sys.path.append(project_root)
 from domainbed import datasets
 from domainbed import hparams_registry
 from domainbed import algorithms
 from domainbed.lib import misc
 from domainbed.lib.fast_data_loader import InfiniteDataLoader, FastDataLoader
-
 
 
 if __name__ == "__main__":
