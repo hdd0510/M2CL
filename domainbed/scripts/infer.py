@@ -37,7 +37,6 @@ def infer_1_algorithm(args, algorithm, pretrain, image):
     algorithm_dict = None
     if pretrain is not None:
         algorithm_dict = torch.load(pretrain, map_location='cpu')
-
     if args.hparams_seed == 0:
         hparams = hparams_registry.default_hparams(algorithm, args.dataset)
     else:
@@ -69,6 +68,7 @@ def infer_1_algorithm(args, algorithm, pretrain, image):
 
     if algorithm_dict is not None:
         algorithm.load_state_dict(algorithm_dict['model_dict'])
+        
         # print(f"Load checkpoint from {args.pretrain}")
 
     index2label = ['dog', 'elephant', 'giraffe', 'guitar', 'horse', 'house', 'person']
@@ -96,9 +96,9 @@ def infer_1_img_M_algos(infer_path, out_dir):
     
     algorithms = ['ERM', 'M2CL', 'MMD']
     pretrains = [
-        '/mnt/disk1/nmduong/hust/m2cl/ERM/model_best_env3_out_acc.pkl',
-        '/mnt/disk1/nmduong/hust/m2cl/M2CL/model_best_env3_out_acc.pkl', 
-        '/mnt/disk1/nmduong/hust/m2cl/MMD/model_best_env3_out_acc.pkl'
+        './ERM/model_best_env3_out_acc.pkl',
+        './M2CL/model_best_env3_out_acc.pkl', 
+        './MMD/model_best_env3_out_acc.pkl'
     ]
     
     preds = []
@@ -149,6 +149,7 @@ if __name__ == "__main__":
     parser.add_argument('--save_model_every_checkpoint', action='store_true')
     parser.add_argument('--alpha', type=float)
     parser.add_argument('--beta', type=float)
+    parser.add_argument('--domain', type=int, default=3, help='index for domain respectively, -1 for all domains')
     
     ## additional ##
     parser.add_argument('--pretrain', type=str, help='Pretrain weights to load', default=None)
@@ -157,19 +158,66 @@ if __name__ == "__main__":
 
     # If we ever want to implement checkpointing, just persist these values
     # every once in a while, and then load them from disk here.
-    
-    infer_paths = [
-        "/mnt/disk1/nmduong/hust/m2cl/domainbed/data/PACS/sketch/dog/5281.png",
-        "/mnt/disk1/nmduong/hust/m2cl/domainbed/data/PACS/sketch/giraffe/7385.png",
-        "/mnt/disk1/nmduong/hust/m2cl/domainbed/data/PACS/sketch/horse/8504.png",
-        "/mnt/disk1/nmduong/hust/m2cl/domainbed/data/PACS/sketch/elephant/n02503517_792-1.png",
-        "/mnt/disk1/nmduong/hust/m2cl/domainbed/data/PACS/sketch/person/12097.png",
-        "/mnt/disk1/nmduong/hust/m2cl/domainbed/data/PACS/sketch/guitar/7638.png"
-    ]
-    
-    out_dir = "./demo"
-    os.makedirs(out_dir, exist_ok=True)
-    
-    for infer_path in infer_paths:
-        infer_1_img_M_algos(infer_path, out_dir)
-        print("Done: ", infer_path)
+    domain_list = ['art_painting', 'cartoon', 'photo', 'sketch', 'all']
+    infer_paths_3 = [
+            "./domainbed/data/PACS/sketch/dog/5281.png",
+            "./domainbed/data/PACS/sketch/giraffe/7385.png",
+            "./domainbed/data/PACS/sketch/horse/8504.png",
+            "./domainbed/data/PACS/sketch/elephant/n02503517_792-1.png",
+            "./domainbed/data/PACS/sketch/person/12097.png",
+            "./domainbed/data/PACS/sketch/guitar/7638.png"
+        ]
+    infer_paths_0 = [
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/dog/pic_007.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/elephant/pic_005.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/giraffe/pic_008.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/guitar/pic_007.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/horse/pic_007.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/house/pic_008.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/art_painting/person/pic_006.jpg'
+        ]
+    infer_paths_1 = [
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/dog/pic_001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/elephant/pic_001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/giraffe/pic_001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/guitar/pic_001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/horse/pic_001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/house/pic_001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/cartoon/person/pic_001.jpg'
+        ]
+    infer_paths_2 = [
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/dog/056_0001.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/elephant/064_0002.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/giraffe/084_0004.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/guitar/063_0005.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/horse/105_0007.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/house/pic_004.jpg',
+            '/Users/dinzdzun/Downloads/m2cl/domainbed/data/PACS/photo/person/253_0003.jpg'
+        ]
+    domain = domain_list[args.domain]
+    if domain == 'sketch':
+        infer_paths =  infer_paths_3
+    elif domain == 'art_painting':
+        infer_paths = infer_paths_0
+    elif domain == 'cartoon':
+        infer_paths = infer_paths_1
+    elif domain == 'photo':
+        infer_paths = infer_paths_2
+    else:
+        infer_dir = [infer_paths_0, infer_paths_1, infer_paths_2, infer_paths_3]
+    if domain == 'all':
+        for i, domain in enumerate(domain_list[:-1]):
+            infer_paths = infer_dir[i]
+            out_dir = args.output_dir + f"/{domain}"
+            os.makedirs(out_dir, exist_ok=True)
+            
+            for infer_path in infer_paths:
+                infer_1_img_M_algos(infer_path, out_dir)
+                print(f"Saved {os.path.basename(infer_path)} to: ", out_dir)
+    else:
+        out_dir = args.output_dir + f"/{domain}"
+        os.makedirs(out_dir, exist_ok=True)
+        
+        for infer_path in infer_paths:
+            infer_1_img_M_algos(infer_path, out_dir)
+            print(f"Saved {os.path.basename(infer_path)} to: ", out_dir)

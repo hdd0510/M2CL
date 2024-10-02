@@ -1,4 +1,4 @@
-python3 -m domainbed.scripts.train\
+python -m domainbed.scripts.train\
        --data_dir=./domainbed/data/\
        --algorithm M2CL\
        --dataset PACS\

@@ -1,9 +1,0 @@
-Traceback (most recent call last):
-  File "/Users/dinzdzun/Downloads/m2cl/domainbed/scripts/train.py", line 116, in <module>
-    dataset = vars(datasets)[args.dataset](args.data_dir,
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/dinzdzun/Downloads/m2cl/domainbed/datasets.py", line 160, in __init__
-    super(RotatedMNIST, self).__init__(root, [0, 15, 30, 45, 60, 75],
-  File "/Users/dinzdzun/Downloads/m2cl/domainbed/datasets.py", line 89, in __init__
-    raise ValueError('Data directory not specified!')
-ValueError: Data directory not specified!

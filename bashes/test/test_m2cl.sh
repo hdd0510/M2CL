@@ -6,4 +6,4 @@ python3 -m domainbed.scripts.test\
        --test_env 3\
        --steps 15000\
        --output_dir M2CL\
-       --pretrain /mnt/disk1/nmduong/hust/m2cl/M2CL/model_best_env3_out_acc.pkl\
+       --pretrain ./M2CL/model_best_env3_out_acc.pkl\

@@ -15,8 +15,7 @@ import torch
 import torchvision
 import torch.utils.data
 import sys
-project_root = os.path.abspath('/Users/dinzdzun/Downloads/m2cl/domainbed')
-sys.path.append(project_root)
+
 from domainbed import datasets
 from domainbed import hparams_registry
 from domainbed import algorithms
