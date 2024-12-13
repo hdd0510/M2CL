@@ -11,6 +11,10 @@ representations.
 
 
 ## Quick start
+Set up:
+```sh
+pip install -e .
+```
 
 Download the datasets:
 
